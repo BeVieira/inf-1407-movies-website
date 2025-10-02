@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.movies, name='movies'),
+    path('', include('movies.urls')),
 ]
 
 
