@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+*.py[cod]
+
+# Ambiente virtual
+venv/
+
+# Banco de dados local
+db.sqlite3
+
+# Arquivos de sistema operacional
+.DS_Store
+
+# Arquivos de ambiente
+.env
