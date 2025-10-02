@@ -9,7 +9,6 @@ class Movie(models.Model):
     director = models.CharField(max_length=100)
     plot = models.TextField(blank=True)
     poster = models.URLField(blank=True)
-    
     def __str__(self):
         return self.title
 
