@@ -1,0 +1,24 @@
+{% extends "movies/base.html" %}
+{% load static %}
+
+{% block extra_head %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'moviesApp/css/user_lists.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Editar Lista</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label for="name">Nome</label>
+        <input type="text" id="name" name="name" value="{{ movie_list.name }}" required>
+
+        <label for="description">Descrição</label>
+        <textarea id="description" name="description">{{ movie_list.description }}</textarea>
+
+        <button type="submit">Salvar alterações</button>
+        <a href="{% url 'user_lists' %}">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

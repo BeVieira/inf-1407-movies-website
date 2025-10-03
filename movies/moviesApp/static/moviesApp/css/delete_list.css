@@ -1,0 +1,47 @@
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+    background: #111827;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    text-align: center;
+}
+
+h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    color: #f87171;
+}
+
+p {
+    color: #d1d5db;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+form button {
+    background: #dc2626;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+form button:hover {
+    background: #b91c1c;
+}
+
+form a {
+    margin-left: 1rem;
+    text-decoration: none;
+    color: #93c5fd;
+    font-weight: 500;
+}
+
+form a:hover {
+    text-decoration: underline;
+}

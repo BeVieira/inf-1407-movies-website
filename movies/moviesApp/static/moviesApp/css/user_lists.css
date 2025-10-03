@@ -1,0 +1,114 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #111827;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #60a5fa;
+}
+
+form {
+    margin-bottom: 2rem;
+}
+
+form input[type="text"],
+form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 1rem;
+    border: none;
+    border-radius: 8px;
+    background: #1f2937;
+    color: #f9fafb;
+    font-size: 1rem;
+}
+
+form textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+form button {
+    background: #2563eb;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+form button:hover {
+    background: #1d4ed8;
+}
+
+form a {
+    margin-left: 1rem;
+    text-decoration: none;
+    color: #f87171;
+    font-weight: 500;
+}
+
+.list-card {
+    background: #1e293b;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.list-card h3 {
+    margin: 0;
+    font-size: 1.4rem;
+    color: #facc15;
+}
+
+.list-card p {
+    font-size: 0.95rem;
+    color: #d1d5db;
+    margin: 0.5rem 0 1rem;
+}
+
+.list-card a {
+    display: inline-block;
+    margin-right: 1rem;
+    color: #93c5fd;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.list-card a:hover {
+    text-decoration: underline;
+}
+
+.list-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0;
+}
+
+.list-card ul li {
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    background: #0f172a;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.list-card ul li a {
+    color: #f87171;
+    font-size: 0.85rem;
+}
+
+.list-card ul li a:hover {
+    text-decoration: underline;
+}
