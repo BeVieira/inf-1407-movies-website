@@ -15,7 +15,9 @@ def movie_search(request):
     query = request.GET.get("q")
     results = []
     if query:
-        results = search_movies(query)
+        results = get_movies_by_title(query)
+    return render(request, "movies/movie_search.html", {"results": results, "query": query})
 
-    movies = Movie.objects.all()
-    return render(request, "movies/movies.html", {"movies": movies, "results": results, "query": query})
+def movie_details(request, movie_id):
+    movie = get_movie_details(movie_id)
+    return render(request, "movies/movie_details.html", {"movie": movie})

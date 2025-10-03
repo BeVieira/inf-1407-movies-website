@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_head %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'moviesApp/css/base.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <div class="movie-card">
+        <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="Poster de {{ movie.title }}">
+
+        <a href="#favoriteModal" class="favorite-btn" title="Favoritar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" fill="none"
+                class="heart-icon">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.015-4.5-4.5-4.5-1.74 0-3.24 1.005-4 2.463C11.74 4.755
+                         10.24 3.75 8.5 3.75 6.015 3.75 4 5.765 4 8.25c0 7.22 8.25
+                         11.25 8.25 11.25S21 15.47 21 8.25z" />
+            </svg>
+        </a>
+
+        <div>
+            <h1>{{ movie.title }}</h1>
+            <div class="meta">
+                <span>Ano: {{ movie.release_date|slice:":4" }}</span>
+                {% if movie.runtime %}<span>Duração: {{ movie.runtime }} min</span>{% endif %}
+                {% if movie.genres %}
+                <span>Gênero:
+                    {% for g in movie.genres %}
+                    {{ g.name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </span>
+                {% endif %}
+                {% if movie.original_language %}<span>Idioma: {{ movie.original_language|upper }}</span>{% endif %}
+                {% if movie.vote_average %}<span>Avaliação: {{ movie.vote_average }}</span>{% endif %}
+            </div>
+            <p>{{ movie.overview|default:"Sem descrição disponível." }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
