@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from .forms import SignUpForm
 from django.contrib import messages
 from .models import Movie, MovieList
 from .services import *
@@ -95,21 +96,16 @@ def signup_view(request):
         return redirect('movies')
 
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = SignUpForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            # se o template enviar email, salve também
-            email = request.POST.get("email")
-            if email:
-                user.email = email
-            user.save()
+            user = form.save()
             login(request, user)
             messages.success(request, "Conta criada e logado com sucesso.")
             return redirect('movies')
         else:
             messages.error(request, "Corrija os erros no formulário.")
     else:
-        form = UserCreationForm()
+        form = SignUpForm()
 
     return render(request, "auth/signup.html", {"form": form})
 
