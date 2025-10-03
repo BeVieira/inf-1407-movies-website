@@ -1,127 +1,68 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+{% extends "base.html" %}
+{% load static %}
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catálogo de Filmes</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 2rem auto;
-      max-width: 960px;
-      padding: 0 1rem;
-      background: #0b1120;
-      color: #f8fafc;
-    }
+{% block title %}Catálogo de Filmes{% endblock %}
 
-    header {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      margin-bottom: 2rem;
-    }
+{% block extra_head %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'moviesApp/css/base.css' %}">
+{% endblock %}
 
-    a.button {
-      align-self: flex-start;
-      background: #2563eb;
-      color: #fff;
-      padding: 0.5rem 1rem;
-      border-radius: 0.5rem;
-      text-decoration: none;
-      transition: box-shadow 0.2s ease;
-    }
-
-    a.button:hover {
-      box-shadow: 0 0.5rem 1rem rgba(37, 99, 235, 0.35);
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: rgba(15, 23, 42, 0.8);
-      border-radius: 0.75rem;
-      overflow: hidden;
-    }
-
-    th,
-    td {
-      padding: 0.75rem 1rem;
-      text-align: left;
-    }
-
-    thead {
-      background: rgba(30, 41, 59, 0.85);
-    }
-
-    tbody tr:nth-child(odd) {
-      background: rgba(30, 41, 59, 0.45);
-    }
-
-    tbody tr:nth-child(even) {
-      background: rgba(30, 41, 59, 0.25);
-    }
-
-    .poster {
-      width: 60px;
-    }
-
-    .poster img {
-      display: block;
-      width: 100%;
-      border-radius: 0.5rem;
-    }
-
-    .empty {
-      text-align: center;
-      padding: 2rem;
-    }
-  </style>
-</head>
-
-<body>
-  <header>
+{% block content %}
+  <section>
     <h1>Catálogo de Filmes</h1>
     <p>Explore a lista completa de filmes cadastrados.</p>
-    <a class="button" href="{% url 'movie_search' %}">Buscar novos filmes</a>
-  </header>
-  {% if movies %}
-  <table>
-    <thead>
-      <tr>
-        <th class="poster">Poster</th>
-        <th>Título</th>
-        <th>Ano</th>
-        <th>Duração</th>
-        <th>Gênero</th>
-        <th>Diretor</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for movie in movies %}
-      <tr>
-        <td class="poster">
-          {% if movie.poster %}
-          <img src="{{ movie.poster }}" alt="Poster de {{ movie.title }}">
-          {% else %}
-          —
-          {% endif %}
-        </td>
-        <td>{{ movie.title }}</td>
-        <td>{{ movie.year }}</td>
-        <td>{{ movie.runtime }}</td>
-        <td>{{ movie.genre }}</td>
-        <td>{{ movie.director }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  </section>
+
+   <form method="get">
+    <input type="text" name="q" placeholder="Digite o nome do filme" value="{{ query|default:'' }}">
+    <button type="submit">Buscar</button>
+  </form>
+
+  {% if query %}
+    {% if results %}
+      <ul>
+        {% for movie in results %}
+          <li>
+            {% if movie.poster_path %}
+              <img
+                src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}"
+                alt="Poster de {{ movie.title }}"
+              >
+            {% elif movie.poster %}
+              <img src="{{ movie.poster }}" alt="Poster de {{ movie.title }}">
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <div class="empty">
+        <p>Nenhum resultado encontrado para "{{ query }}".</p>
+      </div>
+    {% endif %}
+  {% else %}
+    {% if movies %}
+  <div class="grid">
+    {% for movie in movies %}
+    <a href="{#}" class="card">
+      {% if movie.poster_path %}
+      <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="Poster de {{ movie.title }}">
+      {% endif %}
+      <div class="info">
+        <h3>{{ movie.title }}</h3>
+        <div class="meta">
+          <span>{{ movie.year }}</span>
+          {% if movie.genre %}<span>{{ movie.genre }}</span>{% endif %}
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
   {% else %}
   <div class="empty">
-    <p>Nenhum filme cadastrado ainda.</p>
+    <p>Nenhum filme popular disponível no momento.</p>
     <p>Use a busca para encontrar sugestões.</p>
   </div>
   {% endif %}
-</body>
-
-</html>
+  {% endif %}
+{% endblock %}
