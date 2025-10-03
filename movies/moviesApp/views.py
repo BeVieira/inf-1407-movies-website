@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout
@@ -35,22 +35,41 @@ def user_lists(request):
     return render(request, "movies/user_lists.html", {"lists": lists})
 
 @login_required
-def user_profile(request):
-    user = request.user
+def edit_list(request, list_id):
+    movie_list = get_object_or_404(MovieList, id=list_id, owner=request.user)
+    
     if request.method == "POST":
         name = request.POST.get("name")
         description = request.POST.get("description", "")
         if name:
-            MovieList.objects.create(owner=user, name=name, description=description)
-            return redirect("user_profile")
+            movie_list.name = name
+            movie_list.description = description
+            movie_list.save()
+            return redirect("user_lists")
+    
+    return render(request, "movies/edit_list.html", {"movie_list": movie_list})
 
-    lists = MovieList.objects.filter(owner=user)
-    context = {
-        "user": user,
-        "lists": lists,
-    }
-    return render(request, "movies/user_profile.html", context)
 
+@login_required
+def delete_list(request, list_id):
+    movie_list = get_object_or_404(MovieList, id=list_id, owner=request.user)
+    
+    if request.method == "POST":
+        movie_list.delete()
+        return redirect("user_lists")
+    
+    return render(request, "movies/delete_list_confirm.html", {"movie_list": movie_list})
+
+
+@login_required
+def remove_movie_from_list(request, list_id, movie_id):
+    movie_list = get_object_or_404(MovieList, id=list_id, owner=request.user)
+    movie = get_object_or_404(Movie, id=movie_id)
+    
+    if movie in movie_list.movies.all():
+        movie_list.movies.remove(movie)
+    
+    return redirect("user_lists")
 
 def login_view(request):
     if request.user.is_authenticated:

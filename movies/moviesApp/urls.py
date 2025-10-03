@@ -7,7 +7,10 @@ urlpatterns = [
     path("movie/<int:movie_id>/", views.movie_details, name="movie_details"),
 
     path('user/lists/', views.user_lists, name='user_lists'),
-    path('user/profile/', views.user_profile, name='user_profile'),
+    path('user/lists/<int:list_id>/edit/', views.edit_list, name='edit_list'),
+    path('user/lists/<int:list_id>/delete/', views.delete_list, name='delete_list'),
+    path('user/lists/<int:list_id>/remove-movie/<int:movie_id>/', views.remove_movie_from_list, name='remove_movie_from_list'),
+
     path("movie/<int:movie_id>/", views.movie_details, name="movie_details"),
     path("login/", views.login_view, name="login"),
     path("signup/", views.signup_view, name="signup"),
