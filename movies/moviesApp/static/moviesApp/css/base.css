@@ -2,9 +2,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 
-* {
-  box-sizing: border-box;
-  font-family: "Inter", sans-serif;
+{
+box-sizing: border-box;
+font-family: "Inter", sans-serif;
 }
 
 body {
@@ -30,10 +30,12 @@ header {
   a {
     font-weight: bold;
     text-decoration: none;
+
     &:hover {
       h1 {
         color: #0047eeff;
         transition: color 0.3s ease;
+
         span {
           color: #fff;
           transition: color 0.3s ease;
@@ -45,13 +47,63 @@ header {
   h1 {
     font: 3rem "Bebas Neue";
     color: #fff;
-    span{
+
+    span {
       font-family: "Bebas neue", sans-serif;
       color: #0047eeff;
     }
   }
+
+  .header-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 2rem;
+    height: 100px;
+  }
+
+  .auth-buttons {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .auth-btn {
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: 2px solid #2563eb;
+    border-radius: 8px;
+    color: #f8fafc;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .auth-btn:hover {
+    background: #2563eb;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+  }
+
+  .auth-btn.highlight {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: #fff;
+  }
+
+  .auth-btn.highlight:hover {
+    background: #1d4ed8;
+    border-color: #1d4ed8;
+  }
+
 }
-main{
+
+main {
   padding: 2rem;
   margin-top: 100px;
 }
