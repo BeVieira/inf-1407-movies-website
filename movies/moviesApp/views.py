@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from .models import Movie
-from .services import search_movies
+from .services import *
 
 def movies(request):
-    return render(request, "movies/movies.html")
+    popular_movies = get_popular_movies()
+    return render(request, "movies/movies.html", {"movies": popular_movies})
 
 def movie_list(request):
     movies = Movie.objects.all()
@@ -15,4 +16,6 @@ def movie_search(request):
     results = []
     if query:
         results = search_movies(query)
-    return render(request, "movies/movie_search.html", {"results": results, "query": query})
+
+    movies = Movie.objects.all()
+    return render(request, "movies/movies.html", {"movies": movies, "results": results, "query": query})

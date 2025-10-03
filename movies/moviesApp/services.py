@@ -15,3 +15,14 @@ def search_movies(query):
     if response.status_code == 200:
         return response.json().get("results", [])
     return []
+  
+def get_popular_movies():
+    url = f"{API_BASE_URL}/movie/popular"
+    params = {
+        "api_key": API_KEY,
+        "language": "pt-BR"
+    }
+    response = requests.get(url, params=params)
+    if response.status_code == 200:
+        return response.json().get("results", [])
+    return []
