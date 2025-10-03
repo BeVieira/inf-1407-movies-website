@@ -1,12 +1,15 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Meu Site de Filmes{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'moviesApp/css/movie.css' %}">
+    <link rel="stylesheet" href="{% static 'moviesApp/css/movies.css' %}">
+    <link rel="stylesheet" href="{% static 'moviesApp/css/movie_details.css' %}">
     {% block extra_head %}{% endblock %}
 </head>
+
 <body>
     <!-- HEADER COMUM -->
     <header>
@@ -18,4 +21,5 @@
         {% block content %}{% endblock %}
     </main>
 </body>
+
 </html>
