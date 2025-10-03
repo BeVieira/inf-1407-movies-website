@@ -4,65 +4,63 @@
 {% block title %}Catálogo de Filmes{% endblock %}
 
 {% block extra_head %}
-  {{ block.super }}
-  <link rel="stylesheet" href="{% static 'moviesApp/css/base.css' %}">
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'moviesApp/css/base.css' %}">
 {% endblock %}
 
 {% block content %}
-  <section>
-    <h1>Catálogo de Filmes</h1>
-    <p>Explore a lista completa de filmes cadastrados.</p>
-  </section>
+<section>
+  <h1>Catálogo de Filmes</h1>
+  <p>Explore a lista completa de filmes cadastrados.</p>
+</section>
 
-   <form method="get">
-    <input type="text" name="q" placeholder="Digite o nome do filme" value="{{ query|default:'' }}">
-    <button type="submit">Buscar</button>
-  </form>
+<form method="get">
+  <input type="text" name="q" placeholder="Digite o nome do filme" value="{{ query|default:'' }}">
+  <button type="submit">Buscar</button>
+</form>
 
-  {% if query %}
-    {% if results %}
-      <ul>
-        {% for movie in results %}
-          <li>
-            {% if movie.poster_path %}
-              <img
-                src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}"
-                alt="Poster de {{ movie.title }}"
-              >
-            {% elif movie.poster %}
-              <img src="{{ movie.poster }}" alt="Poster de {{ movie.title }}">
-            {% endif %}
-          </li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <div class="empty">
-        <p>Nenhum resultado encontrado para "{{ query }}".</p>
-      </div>
+{% if query %}
+{% if results %}
+<ul>
+  {% for movie in results %}
+  <li>
+    {% if movie.poster_path %}
+    <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="Poster de {{ movie.title }}">
+    {% elif movie.poster %}
+    <img src="{{ movie.poster }}" alt="Poster de {{ movie.title }}">
     {% endif %}
-  {% else %}
-    {% if movies %}
-  <div class="grid">
-    {% for movie in movies %}
-    <a href="{#}" class="card">
-      {% if movie.poster_path %}
-      <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="Poster de {{ movie.title }}">
-      {% endif %}
-      <div class="info">
-        <h3>{{ movie.title }}</h3>
-        <div class="meta">
-          <span>{{ movie.year }}</span>
-          {% if movie.genre %}<span>{{ movie.genre }}</span>{% endif %}
-        </div>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<div class="empty">
+  <p>Nenhum resultado encontrado para "{{ query }}".</p>
+</div>
+{% endif %}
+{% else %}
+{% if movies %}
+<div class="grid">
+  {% for movie in movies %}
+  <a href="{% url 'movie_details' movie.id %}" class="card">
+    {% if movie.poster_path %}
+    <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="Poster de {{ movie.title }}">
+    {% endif %}
+    <div class="info">
+      <h3>{{ movie.title }}</h3>
+      <div class="meta">
+        <span>{{ movie.year }}</span>
+        {% if movie.genre %}<span>{{ movie.genre }}</span>{% endif %}
       </div>
-    </a>
-    {% endfor %}
-  </div>
-  {% else %}
-  <div class="empty">
-    <p>Nenhum filme popular disponível no momento.</p>
-    <p>Use a busca para encontrar sugestões.</p>
-  </div>
-  {% endif %}
-  {% endif %}
+    </div>
+  </a>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty">
+  <p>Nenhum filme popular disponível no momento.</p>
+  <p>Nenhum filme popular disponível no momento.</p>
+  <p>Use a busca para encontrar sugestões.</p>
+</div>
+{% endif %}
+{% endif %}
 {% endblock %}
