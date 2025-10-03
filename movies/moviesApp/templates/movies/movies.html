@@ -5,7 +5,7 @@
 
 {% block extra_head %}
   {{ block.super }}
-  <link rel="stylesheet" href="{% static 'moviesApp/css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'moviesApp/css/movies.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -14,9 +14,25 @@
     <p>Explore a lista completa de filmes cadastrados.</p>
   </section>
 
-   <form method="get">
-    <input type="text" name="q" placeholder="Digite o nome do filme" value="{{ query|default:'' }}">
-    <button type="submit">Buscar</button>
+  <form method="get" class="search-form">
+    <div class="search-field">
+      <input
+        type="text"
+        name="q"
+        placeholder="Digite o nome do filme"
+        value="{{ query|default:'' }}"
+      />
+      <button type="submit" aria-label="Buscar">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="20" height="20"
+             fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round"
+             stroke-linejoin="round" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </button>
+    </div>
   </form>
 
   {% if query %}
