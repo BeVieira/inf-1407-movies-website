@@ -77,12 +77,6 @@ body{
   background-color: #0056b3;
 }
 
-.error-message {
-  color: #f44336;
-  font-size: 13px;
-  margin-top: 5px;
-}
-
 .auth-toggle {
   margin-top: 15px;
   text-align: center;
@@ -134,11 +128,6 @@ body{
   backdrop-filter: blur(10px) saturate(120%);
   -webkit-backdrop-filter: blur(10px) saturate(120%);
 }
-
-.django-messages{list-style:none;padding:0;margin:0 0 12px 0;display:flex;flex-direction:column;gap:6px}
-.django-messages .msg{padding:10px 12px;border-radius:8px;font-size:0.95rem}
-.django-messages .msg.error{background:rgba(255,60,60,0.08);border:1px solid rgba(255,60,60,0.12);color:#ffdddd}
-.django-messages .msg.success{background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.12);color:#bfeee0}
 
 .auth-card form{display:flex;flex-direction:column;gap:12px}
 .auth-card label{font-size:0.85rem;color:var(--muted)}
