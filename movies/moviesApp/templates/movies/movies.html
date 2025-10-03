@@ -30,48 +30,78 @@
     </div>
   </form>
 
-{% if query %}
-{% if results %}
-<ul>
-  {% for movie in results %}
-  <li>
-    {% if movie.poster_path %}
-    <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="Poster de {{ movie.title }}">
-    {% elif movie.poster %}
-    <img src="{{ movie.poster }}" alt="Poster de {{ movie.title }}">
+  <div class="page-grid {% if not user.is_authenticated %}no-sidebar{% endif %}">
+    <main class="main-col">
+      {% if query %}
+        {% if results %}
+          <ul>
+            {% for movie in results %}
+              <li>
+                {% if movie.poster_path %}
+                  <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="Poster de {{ movie.title }}">
+                {% elif movie.poster %}
+                  <img src="{{ movie.poster }}" alt="Poster de {{ movie.title }}">
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <div class="empty">
+            <p>Nenhum resultado encontrado para "{{ query }}".</p>
+          </div>
+        {% endif %}
+      {% else %}
+        {% if movies %}
+          <div class="grid">
+            {% for movie in movies %}
+              <a href="{% url 'movie_details' movie.id %}" class="card">
+                {% if movie.poster_path %}
+                  <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="Poster de {{ movie.title }}">
+                {% endif %}
+                <div class="info">
+                  <h3>{{ movie.title }}</h3>
+                  <div class="meta">
+                    <span>{{ movie.year }}</span>
+                    {% if movie.genre %}<span>{{ movie.genre }}</span>{% endif %}
+                  </div>
+                </div>
+              </a>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="empty">
+            <p>Nenhum filme popular disponível no momento.</p>
+            <p>Use a busca para encontrar sugestões.</p>
+          </div>
+        {% endif %}
+      {% endif %}
+    </main>
+
+    {% if user.is_authenticated %}
+      <aside class="side-col">
+        <section class="user-lists">
+          <h3>Suas listas</h3>
+          {% if user_lists and user_lists.count > 0 %}
+            <ul>
+              {% for lst in user_lists %}
+                <li>
+                  <a href="{% url 'user_lists' %}#list-{{ lst.id }}">
+                    <strong>{{ lst.name }}</strong>
+                    {% if lst.description %}
+                      <p class="list-desc">{{ lst.description }}</p>
+                    {% endif %}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+            <a class="btn-primary" href="{% url 'user_lists' %}">Gerenciar listas</a>
+          {% else %}
+            <div class="empty">
+              <p>Você ainda não tem listas. <a href="{% url 'user_lists' %}">Crie a sua</a></p>
+            </div>
+          {% endif %}
+        </section>
+      </aside>
     {% endif %}
-  </li>
-  {% endfor %}
-</ul>
-{% else %}
-<div class="empty">
-  <p>Nenhum resultado encontrado para "{{ query }}".</p>
-</div>
-{% endif %}
-{% else %}
-{% if movies %}
-<div class="grid">
-  {% for movie in movies %}
-  <a href="{% url 'movie_details' movie.id %}" class="card">
-    {% if movie.poster_path %}
-    <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="Poster de {{ movie.title }}">
-    {% endif %}
-    <div class="info">
-      <h3>{{ movie.title }}</h3>
-      <div class="meta">
-        <span>{{ movie.year }}</span>
-        {% if movie.genre %}<span>{{ movie.genre }}</span>{% endif %}
-      </div>
-    </div>
-  </a>
-  {% endfor %}
-</div>
-{% else %}
-<div class="empty">
-  <p>Nenhum filme popular disponível no momento.</p>
-  <p>Nenhum filme popular disponível no momento.</p>
-  <p>Use a busca para encontrar sugestões.</p>
-</div>
-{% endif %}
-{% endif %}
+  </div>
 {% endblock %}

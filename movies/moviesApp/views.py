@@ -10,7 +10,11 @@ from .services import *
 
 def movies(request):
     popular_movies = get_popular_movies()
-    return render(request, "movies/movies.html", {"movies": popular_movies})
+    context = {"movies": popular_movies}
+    if request.user.is_authenticated:
+        user_lists = MovieList.objects.filter(owner=request.user)
+        context["user_lists"] = user_lists
+    return render(request, "movies/movies.html", context)
 
 def movie_search(request):
     query = request.GET.get("q")
