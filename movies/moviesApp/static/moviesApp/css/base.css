@@ -28,13 +28,18 @@ header {
 
 
   a {
-    font: 2rem "Bebas Neue";
-    color: #fff;
     font-weight: bold;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     text-decoration: none;
+    &:hover {
+      h1 {
+        color: #0047eeff;
+        transition: color 0.3s ease;
+        span {
+          color: #fff;
+          transition: color 0.3s ease;
+        }
+      }
+    }
   }
 
   h1 {
