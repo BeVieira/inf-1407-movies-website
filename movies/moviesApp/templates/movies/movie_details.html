@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{ movie.title }} - Detalhes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0b1120;
+            color: #f8fafc;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .movie-card {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 1.5rem;
+            background: rgba(15, 23, 42, 0.7);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+        }
+
+        img {
+            width: 100%;
+            border-radius: 0.5rem;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .meta {
+            margin: 1rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            color: #cbd5f5;
+        }
+
+        .favorite-btn {
+            background: #2563eb;
+            border: none;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            color: white;
+            cursor: pointer;
+        }
+
+        .favorite-btn:hover {
+            background: #1e40af;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            background: rgba(0, 0, 0, 0.6);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal:target {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #1e293b;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .modal h2 {
+            margin-top: 0;
+        }
+
+        .modal ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .modal ul li {
+            margin-bottom: 1rem;
+        }
+
+        .modal ul li button {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 0.5rem;
+            background: #2563eb;
+            color: white;
+            cursor: pointer;
+        }
+
+        .modal ul li button:hover {
+            background: #1e40af;
+        }
+
+        .close {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #94a3b8;
+            text-decoration: none;
+        }
+
+        .close:hover {
+            color: #f87171;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="movie-card">
+            <img src="{{ movie.poster }}" alt="Poster de {{ movie.title }}">
+            <div>
+                <h1>{{ movie.title }}</h1>
+                <div class="meta">
+                    <span>Ano: {{ movie.year }}</span>
+                    {% if movie.runtime %}<span>Duração: {{ movie.runtime }}</span>{% endif %}
+                    {% if movie.genre %}<span>Gênero: {{ movie.genre }}</span>{% endif %}
+                    {% if movie.director %}<span>Diretor: {{ movie.director }}</span>{% endif %}
+                    {% if movie.language %}<span>Idioma: {{ movie.language|upper }}</span>{% endif %}
+                    {% if movie.vote_average %}<span>Avaliação: {{ movie.vote_average }}</span>{% endif %}
+                </div>
+                <p>{{ movie.plot|default:"Sem descrição disponível." }}</p>
+
+                <a href="#favoriteModal" class="favorite-btn">Adicionar aos favoritos</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="favoriteModal" class="modal">
+        <div class="modal-content">
+            <h2>Selecione uma lista</h2>
+            <form method="post" action="{% url 'select_list' movie.id %}">
+                {% csrf_token %}
+                <ul>
+                    {% for list in request.user.movielist_set.all %}
+                    <li>
+                        <button type="submit" name="list_id" value="{{ list.id }}">{{ list.name }}</button>
+                    </li>
+                    {% empty %}
+                    <p>Você ainda não tem listas. <a href="{% url 'create_list' %}">Crie uma agora</a>.</p>
+                    {% endfor %}
+                </ul>
+            </form>
+            <a href="#" class="close">Cancelar</a>
+        </div>
+    </div>
+</body>
+
+</html>
