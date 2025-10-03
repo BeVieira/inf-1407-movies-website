@@ -1,0 +1,16 @@
+  {% extends "auth/base.html" %}
+  {% block title %}Entrar{% endblock %}
+  {% block heading %}Entrar na sua conta{% endblock %}
+  {% block content %}
+  <form method="post">
+    {% csrf_token %}
+    <label for="id_username">Email</label>
+    <input id="id_username" name="username" type="email" required>
+    <label for="id_password">Senha</label>
+    <input id="id_password" name="password" type="password" required>
+    <button class="btn-primary" type="submit">Entrar</button>
+  </form>
+  {% endblock %}
+  {% block footer %}
+    <p>Não tem conta? <a href="{% url 'signup' %}">Cadastre-se</a></p>
+  {% endblock %}

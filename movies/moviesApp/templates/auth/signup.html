@@ -1,0 +1,36 @@
+{% extends "auth/base.html" %}
+
+{% block title %}Cadastrar{% endblock %}
+{% block heading %}Crie sua conta{% endblock %}
+
+{% block content %}
+  {% if form %}
+    <form method="post" novalidate>
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      {{ form.as_p }}
+      <button class="btn-primary" type="submit">Cadastrar</button>
+    </form>
+  {% else %}
+    <form method="post" novalidate>
+      {% csrf_token %}
+      <label for="id_username">Usuário</label>
+      <input id="id_username" name="username" type="text" required>
+
+      <label for="id_email">Email</label>
+      <input id="id_email" name="email" type="email" required>
+
+      <label for="id_password1">Senha</label>
+      <input id="id_password1" name="password1" type="password" required>
+
+      <label for="id_password2">Confirme a senha</label>
+      <input id="id_password2" name="password2" type="password" required>
+
+      <button class="btn-primary" type="submit">Cadastrar</button>
+    </form>
+  {% endif %}
+{% endblock %}
+
+{% block footer %}
+  <p>Já tem conta? <a href="{% url 'login' %}">Entrar</a></p>
+{% endblock %}
