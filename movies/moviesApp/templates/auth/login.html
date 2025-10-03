@@ -1,14 +1,12 @@
-  {% extends "auth/base.html" %}
+{% extends "auth/base.html" %}
   {% block title %}Entrar{% endblock %}
   {% block heading %}Entrar na sua conta{% endblock %}
   {% block content %}
-  <form method="post">
+  <form method="post" novalidate>
     {% csrf_token %}
-    <label for="id_username">Email</label>
-    <input id="id_username" name="username" type="email" required>
-    <label for="id_password">Senha</label>
-    <input id="id_password" name="password" type="password" required>
-    <button class="btn-primary" type="submit">Entrar</button>
+    {{ form.non_field_errors }}
+    {{ form.as_p }}
+    <button class="btn-primary" type="submit">Enviar</button>
   </form>
   {% endblock %}
   {% block footer %}

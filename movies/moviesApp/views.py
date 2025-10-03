@@ -1,6 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login, logout
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib import messages
 from .models import Movie, MovieList
 from .services import *
 
@@ -50,7 +53,54 @@ def user_profile(request):
 
 
 def login_view(request):
-    return render(request, "auth/login.html")
+    if request.user.is_authenticated:
+        return redirect('movies')  # redireciona para a página principal
+
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            messages.success(request, "Login realizado com sucesso.")
+            return redirect('movies')
+        else:
+            messages.error(request, "Credenciais inválidas. Verifique e tente novamente.")
+    else:
+        form = AuthenticationForm(request)
+
+    return render(request, "auth/login.html", {"form": form})
+
 
 def signup_view(request):
-    return render(request, "auth/signup.html")
+    if request.user.is_authenticated:
+        return redirect('movies')
+
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            # se o template enviar email, salve também
+            email = request.POST.get("email")
+            if email:
+                user.email = email
+            user.save()
+            login(request, user)
+            messages.success(request, "Conta criada e logado com sucesso.")
+            return redirect('movies')
+        else:
+            messages.error(request, "Corrija os erros no formulário.")
+    else:
+        form = UserCreationForm()
+
+    return render(request, "auth/signup.html", {"form": form})
+
+
+def logout_view(request):
+    if request.method == "POST":
+        logout(request)
+        messages.info(request, "Você saiu da sua conta.")
+        return redirect('movies')
+    # permitir logout via GET se preferir:
+    logout(request)
+    messages.info(request, "Você saiu da sua conta.")
+    return redirect('movies')
