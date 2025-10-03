@@ -21,3 +21,9 @@ def movie_search(request):
 def movie_details(request, movie_id):
     movie = get_movie_details(movie_id)
     return render(request, "movies/movie_details.html", {"movie": movie})
+
+def login_view(request):
+    return render(request, "auth/login.html")
+
+def signup_view(request):
+    return render(request, "auth/signup.html")
