@@ -6,9 +6,11 @@ class Movie(models.Model):
     year = models.IntegerField()
     runtime = models.CharField(max_length=50)
     genre = models.CharField(max_length=100)
-    director = models.CharField(max_length=100)
+    language = models.CharField(max_length=50, blank=True)
+    rating = models.CharField(max_length=10, blank=True)
     plot = models.TextField(blank=True)
     poster = models.URLField(blank=True)
+    
     def __str__(self):
         return self.title
 
