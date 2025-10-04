@@ -14,7 +14,7 @@
         {% csrf_token %}
         <input type="text" name="name" placeholder="Nome da lista" required>
         <textarea name="description" placeholder="Descrição" required></textarea>
-        <button type="submit">Criar Lista</button>
+        <button class="btn btn-primary" type="submit">Criar Lista</button>
     </form>
 
     {% if not lists %}
@@ -22,24 +22,17 @@
     {% else %}
     {% for list in lists %}
     <div class="list-card">
-        <a href="{% url 'view_list' list.id %}" class="view-btn">Ver Lista</a>
-        <h3>{{ list.name }}</h3>
+        <div class="list-header">
+            <a href="{% url 'view_list' list.id %}" class="btn btn-primary">Ver Lista</a>
+            <h3>{{ list.name }}</h3>
+        </div>
         <p>{{ list.description }}</p>
 
-        <a href="{% url 'edit_list' list.id %}">Editar</a>
-        <a href="{% url 'delete_list' list.id %}">Excluir</a>
+        <a href="{% url 'edit_list' list.id %}" class="btn btn-primary">Editar</a>
+        <a href="{% url 'delete_list' list.id %}" class="btn btn-danger">Excluir</a>
 
         {% if not list.movies.all %}
-        <ul>
-            {% for movie in list.movies.all %}
-            <li>
-                {{ movie.title }}
-                <a href="{% url 'remove_movie_from_list' list.id movie.id %}">Remover</a>
-            </li>
-            {% endfor %}
-        </ul>
-        {% else %}
-        <p>Essa lista ainda não tem filmes.</p>
+        <p style="margin-top: 1.5rem;">Essa lista ainda não tem filmes.</p>
         {% endif %}
         </a>
     </div>
