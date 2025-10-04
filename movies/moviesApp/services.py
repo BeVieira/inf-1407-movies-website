@@ -49,7 +49,7 @@ def save_movie_from_api(api_data):
     language = api_data.get("original_language", "")
     rating = str(api_data.get("vote_average", ""))
     plot = api_data.get("overview", "")
-    poster = {api_data.get('poster_path', '')}
+    poster = api_data.get('poster_path', '')
 
     movie, created = Movie.objects.get_or_create(
         title=title,
