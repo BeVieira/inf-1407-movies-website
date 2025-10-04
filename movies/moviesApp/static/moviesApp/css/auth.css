@@ -205,7 +205,7 @@ body{
         color: #0047eeff;
         transition: color 0.3s ease;
         span {
-          color: #fff;
+          color: #facc15;
           transition: color 0.3s ease;
         }
       }
@@ -213,7 +213,7 @@ body{
   }
   h1 {
     font: 6rem "Bebas Neue";
-    color: #fff;
+    color: #facc15;
     span{
       font-family: "Bebas neue", sans-serif;
       color: #0047eeff;

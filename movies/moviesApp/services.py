@@ -49,7 +49,8 @@ def save_movie_from_api(api_data):
     language = api_data.get("original_language", "")
     rating = str(api_data.get("vote_average", ""))
     plot = api_data.get("overview", "")
-    poster = api_data.get('poster_path', '')
+    poster_path = api_data.get('poster_path', '')
+    poster = f"https://image.tmdb.org/t/p/w200{poster_path}" if poster_path else ''
 
     movie, created = Movie.objects.get_or_create(
         title=title,

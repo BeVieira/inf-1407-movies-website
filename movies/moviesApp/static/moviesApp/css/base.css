@@ -37,7 +37,7 @@ header {
         transition: color 0.3s ease;
 
         span {
-          color: #fff;
+          color: #facc15;
           transition: color 0.3s ease;
         }
       }
@@ -46,7 +46,7 @@ header {
 
   h1 {
     font: 3rem "Bebas Neue";
-    color: #fff;
+    color: #facc15;
 
     span {
       font-family: "Bebas neue", sans-serif;

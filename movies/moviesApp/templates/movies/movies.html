@@ -30,9 +30,9 @@
       {% for movie in results %}
       <a href="{% url 'movie_details' movie.id %}" class="card">
         {% if movie.poster_path %}
-          <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="Poster de {{ movie.title }}">
+        <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="Poster de {{ movie.title }}">
         {% else %}
-          <div style="width:181.75px; height: 272.625px; background-color:#ddd;"></div>
+        <div style="width:181.75px; height: 272.625px; background-color:#ddd;"></div>
         {% endif %}
         <div class="info">
           <h3>{{ movie.title }}</h3>
@@ -81,18 +81,39 @@
     <section class="user-lists">
       <h3>Suas listas</h3>
       {% if user_lists and user_lists.count > 0 %}
-      <ul>
+      <div class="lists-wrap">
         {% for lst in user_lists %}
-        <li>
-          <a href="{% url 'user_lists' %}#list-{{ lst.id }}">
-            <strong>{{ lst.name }}</strong>
+        <div class="user-list" id="list-{{ lst.id }}" data-edit-url="{% url 'edit_list' lst.id %}" role="link"
+          tabindex="0">
+          <div class="list-header">
+            <a href="{% url 'view_list' lst.id %}"><strong>{{ lst.name }}</strong></a>
             {% if lst.description %}
             <p class="list-desc">{{ lst.description }}</p>
             {% endif %}
-          </a>
-        </li>
+          </div>
+
+          <div class="list-row">
+            {% if lst.movies.count > 0 %}
+            <div class="movie-row">
+              {% for m in lst.movies.all %}
+              <div class="list-poster" title="{{ m.title }}">
+                {% if m.poster %}
+                <img src="{{ m.poster }}" alt="{{ m.title }} poster">
+                {% else %}
+                <div class="poster-placeholder"></div>
+                {% endif %}
+              </div>
+              {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty small">
+              <p>Esta lista ainda não contém filmes.</p>
+            </div>
+            {% endif %}
+          </div>
+        </div>
         {% endfor %}
-      </ul>
+      </div>
       <a class="btn-primary" href="{% url 'user_lists' %}">Gerenciar listas</a>
       {% else %}
       <div class="empty">
