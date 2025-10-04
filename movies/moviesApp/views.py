@@ -33,6 +33,12 @@ def user_lists(request):
     return render(request, "movies/user_lists.html", {"lists": lists})
 
 @login_required
+def view_list(request, list_id):
+    movie_list = get_object_or_404(MovieList, id=list_id, owner=request.user)
+    movies = movie_list.movies.all() 
+    return render(request, "movies/view_list.html", {"movie_list": movie_list, "movies": movies})
+
+@login_required
 def edit_list(request, list_id):
     movie_list = get_object_or_404(MovieList, id=list_id, owner=request.user)
     
@@ -67,7 +73,7 @@ def remove_movie_from_list(request, list_id, movie_id):
     if movie in movie_list.movies.all():
         movie_list.movies.remove(movie)
     
-    return redirect("user_lists")
+    return redirect('view_list', list_id=list_id)
 
 @login_required
 def select_list(request, movie_id):
