@@ -26,17 +26,24 @@
   <main class="main-col">
     {% if query %}
     {% if results %}
-    <ul>
+    <div class="grid">
       {% for movie in results %}
-      <li>
+      <a href="{% url 'movie_details' movie.id %}" class="card">
         {% if movie.poster_path %}
-        <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="Poster de {{ movie.title }}">
-        {% elif movie.poster %}
-        <img src="{{ movie.poster }}" alt="Poster de {{ movie.title }}">
+          <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="Poster de {{ movie.title }}">
+        {% else %}
+          <div style="width:181.75px; height: 272.625px; background-color:#ddd;"></div>
         {% endif %}
-      </li>
+        <div class="info">
+          <h3>{{ movie.title }}</h3>
+          <div class="meta">
+            <span>{{ movie.year }}</span>
+            {% if movie.genre %}<span>{{ movie.genre }}</span>{% endif %}
+          </div>
+        </div>
+      </a>
       {% endfor %}
-    </ul>
+    </div>
     {% else %}
     <div class="empty">
       <p>Nenhum resultado encontrado para "{{ query }}".</p>

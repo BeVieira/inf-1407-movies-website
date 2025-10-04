@@ -10,14 +10,15 @@ from .services import *
 
 def movies(request):
     query = request.GET.get("q")
-    if query:
-      results = get_movies_by_title(query)
-      return render(request, "movies/movies.html", {"results": results, "query": query})
-    popular_movies = get_popular_movies()
-    context = {"movies": popular_movies}
+    context = {}
     if request.user.is_authenticated:
-        user_lists = MovieList.objects.filter(owner=request.user)
-        context["user_lists"] = user_lists
+        context["user_lists"] = MovieList.objects.filter(owner=request.user)
+
+    if query:
+        context.update({"results": get_movies_by_title(query), "query": query})
+    else:
+        context["movies"] = get_popular_movies()
+
     return render(request, "movies/movies.html", context)
 
 def movie_details(request, movie_id):
