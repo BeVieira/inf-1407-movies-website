@@ -1,0 +1,142 @@
+.container {
+    padding: 2rem;
+    margin-top: 100px;
+    color: #fff;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.description {
+    color: #cbd5e1;
+    margin-bottom: 1.5rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1.5rem;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    background-color: #111827;
+    border-radius: 10px;
+    overflow: hidden;
+    text-decoration: none;
+    color: #fff;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 15px rgba(0, 71, 238, 0.4);
+}
+
+.card img {
+    width: 100%;
+    height: 270px;
+    object-fit: cover;
+}
+
+.info {
+    padding: 0.8rem;
+}
+
+.info h3 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.meta {
+    display: flex;
+    justify-content: space-between;
+    color: #94a3b8;
+    font-size: 0.9rem;
+}
+
+.no-poster {
+    background: #1f2937;
+    height: 270px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+}
+
+/* Botão de voltar */
+.btn-back {
+    display: inline-block;
+    background-color: #0047ee;
+    color: white;
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: background 0.3s;
+    margin-bottom: 1rem;
+}
+
+.btn-back:hover {
+    background-color: #0033b3;
+}
+
+/* MODAL */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal:target {
+    display: flex;
+}
+
+.modal-content {
+    background-color: #1e293b;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+}
+
+.confirm-btn,
+.cancel-btn {
+    display: inline-block;
+    margin: 1rem 0.5rem 0;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.confirm-btn {
+    background-color: #ef4444;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.confirm-btn:hover {
+    background-color: #dc2626;
+}
+
+.cancel-btn {
+    background-color: #374151;
+    color: #fff;
+}
+
+.cancel-btn:hover {
+    background-color: #4b5563;
+}

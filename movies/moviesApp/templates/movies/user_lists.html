@@ -22,6 +22,7 @@
     {% else %}
     {% for list in lists %}
     <div class="list-card">
+        <a href="{% url 'view_list' list.id %}" class="view-btn">Ver Lista</a>
         <h3>{{ list.name }}</h3>
         <p>{{ list.description }}</p>
 
@@ -40,6 +41,7 @@
         {% else %}
         <p>Essa lista ainda não tem filmes.</p>
         {% endif %}
+        </a>
     </div>
     {% endfor %}
     {% endif %}

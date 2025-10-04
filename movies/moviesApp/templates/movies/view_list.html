@@ -1,0 +1,50 @@
+{% extends "movies/base.html" %}
+{% load static %}
+
+{% block extra_head %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'moviesApp/css/view_list.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2>{{ list.name }}</h2>
+  <p class="description">{{ list.description }}</p>
+
+  {% if movies %}
+  <div class="grid">
+    {% for movie in movies %}
+    <a href="#modal-{{ movie.id }}" class="card">
+      {% if movie.poster %}
+      <img src="https://image.tmdb.org/t/p/w200{{ movie.poster }}" alt="Poster de {{ movie.title }}">
+      {% else %}
+      <div class="no-poster">Sem imagem</div>
+      {% endif %}
+      <div class="info">
+        <h3>{{ movie.title }}</h3>
+        <div class="meta">
+          <span>{{ movie.year }}</span>
+          {% if movie.genre %}
+          <span>{{ movie.genre }}</span>
+          {% endif %}
+        </div>
+      </div>
+    </a>
+
+    <div id="modal-{{ movie.id }}" class="modal">
+      <div class="modal-content">
+        <h3>Remover "{{ movie.title }}" da lista?</h3>
+        <form method="post" action="{% url 'remove_movie_from_list' movie_list.id movie.id %}">
+          {% csrf_token %}
+          <button type="submit" class="confirm-btn">Sim, remover</button>
+          <a href="#" class="cancel-btn">Cancelar</a>
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p>Essa lista ainda não tem filmes.</p>
+  {% endif %}
+</div>
+{% endblock %}
