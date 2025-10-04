@@ -4,50 +4,51 @@
 {% block title %}Catálogo de Filmes{% endblock %}
 
 {% block extra_head %}
-  {{ block.super }}
-  <link rel="stylesheet" href="{% static 'moviesApp/css/movies.css' %}">
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'moviesApp/css/movies.css' %}">
 {% endblock %}
 
 {% block content %}
-  <form method="get" class="search-form">
-    <div class="search-field">
-      <input
-        type="text"
-        name="q"
-        placeholder="Digite o nome do filme"
-        value="{{ query|default:'' }}"
-      />
-      <button type="submit" aria-label="Buscar">
-        <svg xmlns="http://www.w3.org/2000/svg"
-             width="20" height="20"
-             fill="none" stroke="currentColor"
-             stroke-width="2" stroke-linecap="round"
-             stroke-linejoin="round" viewBox="0 0 24 24">
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-      </button>
-    </div>
-  </form>
+<form method="get" action="{% url 'movies' %}" class="search-form">
+  <div class="search-field">
+    <input type="text" name="q" placeholder="Digite o nome do filme" value="{{ query|default:'' }}" />
+    <button type="submit" aria-label="Buscar">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </button>
+  </div>
+</form>
 
 {% if query %}
-{% if results %}
-<ul>
-  {% for movie in results %}
-  <li>
-    {% if movie.poster_path %}
-    <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="Poster de {{ movie.title }}">
-    {% elif movie.poster %}
-    <img src="{{ movie.poster }}" alt="Poster de {{ movie.title }}">
-    {% endif %}
-  </li>
-  {% endfor %}
-</ul>
-{% else %}
-<div class="empty">
-  <p>Nenhum resultado encontrado para "{{ query }}".</p>
-</div>
-{% endif %}
+  {% if results %}
+    <div class="grid">
+      {% for movie in results %}
+      <a href="{% url 'movie_details' movie.id %}" class="card">
+        <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="Poster de {{ movie.title }}">
+        <div class="info">
+          <h3>{{ movie.title }}</h3>
+          <div class="meta">
+            <span>{{ movie.release_date|slice:":4" }}</span>
+            {% if movie.genres %}
+              <span>
+                {% for g in movie.genres %}
+                  {{ g.name }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+              </span>
+            {% endif %}
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty">
+      <p>Nenhum resultado encontrado para "{{ query }}".</p>
+    </div>
+  {% endif %}
 {% else %}
 {% if movies %}
 <div class="grid">
@@ -68,7 +69,6 @@
 </div>
 {% else %}
 <div class="empty">
-  <p>Nenhum filme popular disponível no momento.</p>
   <p>Nenhum filme popular disponível no momento.</p>
   <p>Use a busca para encontrar sugestões.</p>
 </div>

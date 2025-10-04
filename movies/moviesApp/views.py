@@ -9,15 +9,12 @@ from .models import Movie, MovieList
 from .services import *
 
 def movies(request):
-    popular_movies = get_popular_movies()
-    return render(request, "movies/movies.html", {"movies": popular_movies})
-
-def movie_search(request):
     query = request.GET.get("q")
-    results = []
     if query:
         results = get_movies_by_title(query)
-    return render(request, "movies/movie_search.html", {"results": results, "query": query})
+        return render(request, "movies/movies.html", {"results": results, "query": query})
+    popular_movies = get_popular_movies()
+    return render(request, "movies/movies.html", {"movies": popular_movies})
 
 def movie_details(request, movie_id):
     movie = get_movie_details(movie_id)
