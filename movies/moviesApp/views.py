@@ -9,20 +9,16 @@ from .models import Movie, MovieList
 from .services import *
 
 def movies(request):
+    query = request.GET.get("q")
+    if query:
+      results = get_movies_by_title(query)
+      return render(request, "movies/movies.html", {"results": results, "query": query})
     popular_movies = get_popular_movies()
     context = {"movies": popular_movies}
     if request.user.is_authenticated:
         user_lists = MovieList.objects.filter(owner=request.user)
         context["user_lists"] = user_lists
     return render(request, "movies/movies.html", context)
-
-def movie_search(request):
-    query = request.GET.get("q")
-    if query:
-        results = get_movies_by_title(query)
-        return render(request, "movies/movies.html", {"results": results, "query": query})
-    popular_movies = get_popular_movies()
-    return render(request, "movies/movies.html", {"movies": popular_movies})
 
 def movie_details(request, movie_id):
     movie = get_movie_details(movie_id)
