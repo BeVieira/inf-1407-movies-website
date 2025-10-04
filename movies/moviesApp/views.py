@@ -76,6 +76,23 @@ def remove_movie_from_list(request, list_id, movie_id):
     
     return redirect("user_lists")
 
+@login_required
+def select_list(request, movie_id):
+    if request.method == "POST":
+        list_id = request.POST.get("list_id")
+        movie_list = get_object_or_404(MovieList, id=list_id, owner=request.user)
+        
+        api_data = get_movie_details(movie_id)  
+        movie = save_movie_from_api(api_data)
+        
+        movie_list.movies.add(movie)
+
+        messages.success(request, f'O filme "{movie.title}" foi adicionado à lista "{movie_list.name}"!')
+        
+        return redirect("movie_details", movie_id=movie_id)
+
+    return redirect("movie_details", movie_id=movie_id)
+
 def login_view(request):
     if request.user.is_authenticated:
         return redirect('movies')  # redireciona para a página principal

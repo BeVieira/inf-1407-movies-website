@@ -16,8 +16,8 @@
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" fill="none"
                 class="heart-icon">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.015-4.5-4.5-4.5-1.74 0-3.24 1.005-4 2.463C11.74 4.755
-                         10.24 3.75 8.5 3.75 6.015 3.75 4 5.765 4 8.25c0 7.22 8.25
-                         11.25 8.25 11.25S21 15.47 21 8.25z" />
+                    10.24 3.75 8.5 3.75 6.015 3.75 4 5.765 4 8.25c0 7.22 8.25
+                    11.25 8.25 11.25S21 15.47 21 8.25z" />
             </svg>
         </a>
 
@@ -37,6 +37,31 @@
                 {% if movie.vote_average %}<span>Avaliação: {{ movie.vote_average }}</span>{% endif %}
             </div>
             <p>{{ movie.overview|default:"Sem descrição disponível." }}</p>
+        </div>
+    </div>
+
+    <div id="favoriteModal" class="modal">
+        <div class="modal-content">
+            <h2>Selecione uma lista</h2>
+            {% if request.user.is_authenticated %}
+            {% if request.user.movielist_set.exists %}
+            <form method="post" action="{% url 'select_list' movie.id %}">
+                {% csrf_token %}
+                <ul>
+                    {% for list in request.user.movielist_set.all %}
+                    <li>
+                        <button type="submit" name="list_id" value="{{ list.id }}">{{ list.name }}</button>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </form>
+            {% else %}
+            <p>Você ainda não tem listas. <a href="{% url 'create_list' %}">Crie uma agora</a>.</p>
+            {% endif %}
+            {% else %}
+            <p><a href="{% url 'login' %}">Entre</a> para favoritar filmes</p>
+            {% endif %}
+            <a href="#" class="close">Cancelar</a>
         </div>
     </div>
 </div>
