@@ -116,15 +116,5 @@ for m in Movie.objects.all():
 
 ## Membros do grupo
 
-- [Coloque aqui os nomes dos participantes do grupo]
-
----
-
-Se quiser, eu posso:
-
-- Adicionar um management command para normalizar posters automaticamente.
-- Escrever testes unitários básicos para views e filtro.
-- Incluir instruções de deploy.
-
-Última observação: antes de executar funcionalidades que consultam o TMDB, adicione sua API key no `.env` (variável `TMDB_API_KEY`).
+- Bernardo Vieira Santos e João Victor Francisco
 
